@@ -1,3 +1,6 @@
+
+const { mergeConfig } = require('vite');
+
 module.exports = {
   stories: ['../src/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: [
@@ -8,6 +11,13 @@ module.exports = {
   staticDirs: ['../public', '../static'],
   framework: "@storybook/react",
   core: {
-    "builder": "@storybook/builder-webpack5"
-  }
+    "builder": "@storybook/builder-vite"
+  },
+  async viteFinal(config, { configType }) {
+    return mergeConfig(config, {
+      resolve: {
+        alias: { foo: 'bar' },
+      },
+    });
+  },
 }
